@@ -3,9 +3,10 @@ using ViewModels;
 
 public partial class BestScoresPageView : ContentPage
 {
-	public BestScoresPageView()
+	public BestScoresPageView(BestScoresPageViewModel vm)
 	{
-		InitializeComponent();
-        this.BindingContext = new BestScoresPageViewModel();
+        this.BindingContext = vm;
+        InitializeComponent();
+		
     }
 }
