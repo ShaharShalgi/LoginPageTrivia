@@ -13,28 +13,27 @@ namespace LoginPage.ViewModels
 {
     public class BestScoresPageViewModel:ViewModel
     {
-        
-        
-        public ObservableCollection<Player> players { get; set; }
+        private List<Player> fullPlayers;
+        UserService userService;
+        public ObservableCollection<Player> Players { get; set; }
         public ICommand LoadPlayersCommand { get; private set; }
-        public BestScoresPageViewModel()
+        public BestScoresPageViewModel(UserService userService)
         {
-            
-            players = new ObservableCollection<Player>();
+            fullPlayers = new List<Player>();
+            this.userService = userService;
+            Players = new ObservableCollection<Player>();
 
-            LoadPlayersCommand = new Command(async () => await
-             LoadPlayers());
+            LoadPlayersCommand = new Command(async () => await LoadPlayers());
 
         }
         private async Task LoadPlayers()
         {
-            UserService userService = new UserService();
-            players.Clear();
-            foreach (var Player in userService.playersList)
-                players.Add(Player);
-
-
-
+            fullPlayers = userService.ShowByDesc();
+            Players.Clear();
+            foreach (var Player in fullPlayers)
+                Players.Add(Player);
         }
+
+
     }
 }
